@@ -19,6 +19,11 @@ class Contact extends BaseController{
   }
 
   public function store(){
+    $rules = [
+      'name' => 'required|permit_empty',
+      'email' => 'required|valid_email|permit_empty',
+      'message' => 'required'
+    ];
 
   }
 
