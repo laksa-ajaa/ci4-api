@@ -39,12 +39,12 @@ class Project extends Migration
           'default' => new RawSql('CURRENT_TIMESTAMP'),
       ],
     ]);
-    $this->forge->addKey('id', true);
-    $this->forge->createTable('rnd_contacts');
+    $this->forge->addKey('project_id', true);
+    $this->forge->createTable('rnd_projects');
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('rnd_projects');
     }
 }

@@ -8,12 +8,19 @@ use App\Controllers\Project;
 /**
  * @var RouteCollection $routes
  */
+service('auth')->routes($routes);
 $routes->get('/', fn() => "Hello World!");
 
 $routes->group('/', static function ($routes) {
   $routes->get('contact', [Contact::class, 'redirect']);
   $routes->post('contact', [Contact::class, 'store']);
   $routes->get('project', [Project::class, 'create']);
+});
+
+$routes->group('auth', static function ($routes) {
+  $routes->get('/', fn() => redirect()->to('/auth/login'));
+  $routes->get('login', 'Auth::login');
+  $routes->post('login', 'Auth::login');
 });
 
 $routes->group('dashboard', function($routes){
