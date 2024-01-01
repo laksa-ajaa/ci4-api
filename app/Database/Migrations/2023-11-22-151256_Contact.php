@@ -38,6 +38,6 @@ class Contact extends Migration
 
     public function down()
     {
-      $this->forge->dropTable('rnd_projects');
+      $this->forge->dropTable('rnd_contacts');
     }
 }

@@ -15,20 +15,22 @@
 <body class="sb-nav-fixed">
 <?= $this->include("_layouts/admin/navbar") ?>
   <div id="layoutSidenav">
-    <div id="layoutSidenav_nav" class="shadow-sm"><?= $this->include("_layouts/admin/sidebar.php") ?></div>
+    <div id="layoutSidenav_nav"><?= $this->include("_layouts/admin/sidebar.php") ?></div>
     <div id="layoutSidenav_content">
-      <main>
-        <div class="d-flex bg-white p-4 mb-4 shadow-sm">
-          <h3 class="fw-bold m-0"><?=$title?></h3>
-        </div>
-        <div class="container-fluid px-4">
+      <main id="content">
+        <header class="border-bottom bg-body mb-3">
+          <div class="container-fluid px-4">
+            <div class="content d-flex align-items-center justify-content-between py-2">
+              <?= $this->renderSection('header') ?>
+            </div>
+          </div>
+        </header>
+        <div class="container-fluid">
           <?= $this->renderSection('content') ?>
         </div>
       </main>
-      <footer class="py-4 bg-light mt-auto">
-        <div class="container-fluid px-4">
-          <div class="text-muted small">Copyright &copy; <?=date("Y")?> - <?= '' // APP_NAME ?></div>
-        </div>
+      <footer id="footer-content">
+        <p class="text-muted small m-0">Copyright &copy; <?= date('Y') ?> RND</p>
       </footer>
     </div>
   </div>
