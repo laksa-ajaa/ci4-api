@@ -25,7 +25,7 @@ class Contact extends Migration
         'null'       => true
       ],
       'message' => [
-        'type' => 'TEXT',
+        'type' => 'TEXT'
       ],
       'created_at' => [
         'type'    => 'TIMESTAMP',

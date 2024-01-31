@@ -1,80 +1,106 @@
-<?= $this->extend('_layouts/auth/template'); ?>
-<?= $this->section('content'); ?>
-<div class="container mt-5">
-  <div class="row justify-content-center">
+<?= $this->extend('_layouts/auth/template') ?>
 
-        <div class="text-center my-4"><img class="rounded-circle shadow-sm" src="<?=base_url('assets/img/logo.webp')?>" width="50" height="50"></div>
-        <h4 class="text-center fw-light">Sign in to <?=APP_NAME?></h4>
+<?= $this->section('title') ?>Login - RND API<?= $this->endSection() ?>
 
-    <div class="col-lg-4">
+<?= $this->section('content') ?>
+<div class="my-4 py-4">
 
-    <?= view('Myth\Auth\Views\_message_block') ?>
+  <div class="header my-4">
+    <div class="text-center my-3"><img class="rounded-circle shadow-sm" src="<?= base_url('assets/img/logo.webp') ?>" width="65" height="65"></div>
+    <h4 class="text-center fw-light">Sign in to Continue</h4>
+  </div>
 
-      <div class="card rounded-0 bg-body-tertiary mt-3">
-        <form class="card-body" action="<?= url_to('login') ?>" method="post">
-          <?= csrf_field() ?>
-          <?php if ($config->validFields === ['email']): ?>
-          <!-- <div class="form-floating mb-3">
-            <input name="login" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
-              id="inputLogin" type="email" placeholder="<?=lang('Auth.email')?>" />
-            <label for="inputLogin"><?=lang('Auth.email')?></label>
-            <div class="invalid-feedback"><?=session('errors.login')?></div>
-          </div> -->
-          <div class="mb-3">
-            <label for="inputLogin" class="form-label small"><?=lang('Auth.emailOrUsername')?></label>
-            <input name="login" type="text" class="form-control rounded-0 form-control-sm <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>" id="inputLogin" required>
-            <div class="invalid-feedback"><?=session('errors.login')?></div>
+  <div class="col-12 col-sm-7 col-md-5 col-lg-4 mx-auto px-2">
+
+    <?php if (session('error') !== null) : ?>
+      <div class="mt-3">
+        <?php if (session('error') !== null) : ?>
+          <div class="alert alert-danger alert-dismissible fade show rounded-0 small" role="alert">
+            <span><?= session('error') ?></span>
+            <button type="button" class="btn-close small" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
-          <?php else: ?>
-          <div class="mb-3">
-            <label for="inputLogin" class="form-label small"><?=lang('Auth.emailOrUsername')?></label>
-            <input name="login" type="text" class="form-control rounded-0 form-control-sm <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>" id="inputLogin" required>
-            <div class="invalid-feedback"><?=session('errors.login')?></div>
+        <?php elseif (session('errors') !== null) : ?>
+          <div class="alert alert-danger alert-dismissible fade show rounded-0 small" role="alert">
+            <?php if (is_array(session('errors'))) : ?>
+              <?php foreach (session('errors') as $error) : ?>
+                <span><?= $error ?></span><br>
+              <?php endforeach ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <?php else : ?>
+              <span><?= session('errors') ?></span>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <?php endif ?>
           </div>
-
-          <!-- <div class="form-floating mb-3">
-            <input name="login" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
-              id="inputLogin" type="text" placeholder="<?=lang('Auth.emailOrUsername')?>" />
-            <label for="inputLogin"><?=lang('Auth.emailOrUsername')?></label>
-            <div class="invalid-feedback"><?=session('errors.login')?></div>
-          </div> -->
-          <?php endif; ?>
-
-          <div class="mb-3">
-            <label for="inputPassword" class="form-label small"><?=lang('Auth.password')?></label>
-            <input name="password" type="password" class="form-control rounded-0 form-control-sm <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>" id="inputPassword" required>
-            <div class="invalid-feedback"><?=session('errors.password')?></div>
-          </div>
-
-          <!-- <div class="form-floating mb-3">
-            <input name="password" class="form-control <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>" id="inputPassword" type="password" placeholder="<?=lang('Auth.password')?>" />
-            <label for="inputPassword"><?=lang('Auth.password')?></label>
-            <div class="invalid-feedback"><?=session('errors.password')?></div>
-          </div> -->
-          <?php if ($config->allowRemembering): ?>
-          <div class="form-check mb-3">
-            <input class="form-check-input <?php if (old('remember')) : ?> checked <?php endif ?>"
-              id="inputRememberPassword" name="remember" type="checkbox" checked />
-            <label class="form-check-label" for="inputRememberPassword"><?=lang('Auth.rememberMe')?></label>
-          </div>
-          <?php endif; ?>
-          <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-            <?php if ($config->activeResetter): ?>
-            <a class="small" href="<?=url_to('forgot')?>"><?=lang('Auth.forgotYourPassword')?></a>
-            <?php endif; ?>
-            <button type="submit" class="btn rounded-0 btn-sm btn-success w-100">Sign in</button>
-          </div>
-        </form>
+        <?php endif ?>
       </div>
+    <?php endif ?>
 
-      <?php if ($config->allowRegistration) : ?>
+    <?php if (session('message') !== null) : ?>
+      <div class="mt-3">
+        <div class="alert alert-success alert-dismissible fade show rounded-0 small" role="alert">
+          <span><?= session('message') ?></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    <?php endif ?>
+
+    <div class="card bg-light rounded-0 mt-3">
+      <form class="card-body mx-1" action="<?= url_to('login') ?>" method="POST">
+        <?= csrf_field() ?>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label small">Email</label>
+          <input type="email" name="email" class="form-control form-control-sm rounded-0" id="email" placeholder="Enter Email" value="<?= old('email') ?? '' ?>" autofocus required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label small">Password</label>
+          <input type="password" name="password" class="form-control form-control-sm rounded-0" id="password" placeholder="Enter Password" required>
+        </div>
+
+        <!-- Remember me -->
+        <?php if (setting('Auth.sessionConfig')['allowRemembering']) : ?>
+          <div class="form-check mb-3">
+            <input class="form-check-input rounded-0" name="remember" id="remember" type="checkbox" <?php if (old('remember')) : ?> checked<?php endif ?>>
+            <label class="form-check-label small" for="remember">Remember Me</label>
+          </div>
+        <?php endif; ?>
+        <button type="submit" class="btn btn-sm btn-success w-100 rounded-0">Sign in</button>
+        <?php if (setting('Auth.allowMagicLinkLogins')) : ?>
+          <p class="text-center"><?= lang('Auth.forgotPassword') ?> <a href="<?= url_to('magic-link') ?>"><?= lang('Auth.useMagicLink') ?></a></p>
+        <?php endif ?>
+      </form>
+    </div>
+    <?php if (setting('Auth.allowRegistration')) : ?>
       <div class="card rounded-0 my-3">
         <div class="card-body">
           <div class="small text-center"><a class="link-success fw-medium text-decoration-none" href="<?= url_to('register') ?>">Create an Account</a></div>
         </div>
       </div>
-      <?php endif; ?>
+    <?php endif ?>
+    <div class="text-center my-4">
+      <small>Made with <span class="small pulse d-inline-block">&#10084;</span> by <a class="text-decoration-none fw-bold" href="https://instagram.com/rndio_">RND</a> <br>Copyright © <?= date('Y') ?></small>
     </div>
   </div>
 </div>
-<?= $this->endSection(); ?>
+<?= $this->endSection() ?>
+
+<?= $this->section('pageStyles') ?>
+<style>
+  .pulse {
+    animation: pulse .2s infinite ease alternate;
+  }
+
+  @keyframes pulse {
+    from {
+      transform: scale(0.8);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+</style>
+<?= $this->endSection() ?>
